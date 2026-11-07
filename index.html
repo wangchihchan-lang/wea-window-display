@@ -953,7 +953,9 @@ function applyUrlParams() {
 }
 
 function generateShareUrl() {
-  var slots = (S.a || []).map(function(x){ return x.split('|')[0]; }).join(',');
+  var current = AR(S.v) || [];
+  var slots = current.filter(function(x){ return x.indexOf('|3') >= 0 || x.indexOf('|1') >= 0; })
+                     .map(function(x){ return x.split('|')[0]; }).join(',');
   var url = location.origin + location.pathname + 
     '?mode=' + S.v + 
     '&stylist=' + S.si + 
