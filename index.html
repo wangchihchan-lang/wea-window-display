@@ -936,41 +936,42 @@ var WLK=['路過貴賓請洽櫃檯\n依到場順序入座','路過貴賓歡迎�
 var D={v:0,si:0,vi:0,sub:[0,1,2],ti:0,wi:0,th:'auto',wf:'18:00',wt:'06:00',day:'',a:[],b:[],c:[],prev:null,ht:[0,0,0],hc:['','',''],nd:'',season:'auto',sc:'',dc:'',tc:'',wc:'',fb:0,fbc:'',fbs:'',fx:true,autoP:false,asw:true};
 var S=JSON.parse(JSON.stringify(D)),KEY='wea-v7';
 
-// ===== 遠端設定（Google 試算表）=====
-var REMOTE_SHEET_URL = ''; // 填入你的 Google 試算表「發佈到網頁」的 CSV 連結
-var remoteEnabled = false;
+// ===== 簡易遠端同步（Google 試算表）=====
+var SHEET_CSV = ''; // 之後填入你的發佈 CSV 連結
+var lastRemote = '';
 
-function loadRemoteSettings() {
-  if (!REMOTE_SHEET_URL) return;
-  fetch(REMOTE_SHEET_URL + '&cachebust=' + Date.now())
-    .then(r => r.text())
-    .then(csv => {
-      var lines = csv.trim().split('\n');
-      var settings = {};
-      lines.slice(1).forEach(function(line) {
-        var parts = line.split(',');
-        if (parts.length >= 2) settings[parts[0].trim()] = parts[1].trim();
-      });
-      // 套用遠端設定
-      if (settings.mode !== undefined) S.v = parseInt(settings.mode) || 0;
-      if (settings.stylist !== undefined) S.si = parseInt(settings.stylist) || 0;
-      if (settings.service !== undefined) S.vi = parseInt(settings.service) || 0;
-      if (settings.theme) S.th = settings.theme;
-      if (settings.season) S.season = settings.season;
-      if (settings.fx !== undefined) S.fx = settings.fx === 'true';
-      // 時段處理（簡化版）
-      if (settings.slots_a) {
-        S.a = settings.slots_a.split(',').filter(Boolean).map(function(s){return s+'|3'});
-      }
-      remoteEnabled = true;
-      render();
-    })
-    .catch(function(e){ console.log('Remote load failed', e); });
+function applyRemote(csv) {
+  if (!csv || csv === lastRemote) return;
+  lastRemote = csv;
+  var lines = csv.trim().split('\n');
+  var map = {};
+  lines.slice(1).forEach(function(line) {
+    var p = line.split(',');
+    if (p.length >= 2) map[p[0].trim()] = p[1].trim();
+  });
+  var changed = false;
+  if (map.mode !== undefined && parseInt(map.mode) !== S.v) { S.v = parseInt(map.mode) || 0; changed = true; }
+  if (map.stylist !== undefined && parseInt(map.stylist) !== S.si) { S.si = parseInt(map.stylist) || 0; changed = true; }
+  if (map.service !== undefined && parseInt(map.service) !== S.vi) { S.vi = parseInt(map.service) || 0; changed = true; }
+  if (map.theme && map.theme !== S.th) { S.th = map.theme; changed = true; }
+  if (map.fx !== undefined) { var fx = map.fx === 'true'; if (fx !== S.fx) { S.fx = fx; changed = true; } }
+  if (map.slots && map.slots) {
+    var arr = map.slots.split(',').filter(Boolean).map(function(t){ return t.trim()+'|3'; });
+    if (JSON.stringify(arr) !== JSON.stringify(S.a)) { S.a = arr; changed = true; }
+  }
+  if (changed) render();
 }
 
-// 每 15 秒檢查一次遠端設定
-setInterval(loadRemoteSettings, 15000);
-loadRemoteSettings();
+function pollSheet() {
+  if (!SHEET_CSV) return;
+  fetch(SHEET_CSV + (SHEET_CSV.indexOf('?')>=0?'&':'?') + 't=' + Date.now())
+    .then(function(r){ return r.text(); })
+    .then(applyRemote)
+    .catch(function(){});
+}
+
+setInterval(pollSheet, 12000);
+pollSheet();
 
 var boxHTML='',introKey='',seasonNow='',darkNow=false;
 
