@@ -1,1 +1,1295 @@
-PLACEHOLDER_TO_BE_REPLACED
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>WEa 髮粧 櫥窗展示</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="WEa 櫥窗">
+<meta name="theme-color" content="#2b231b">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+/* ========== 基礎變數（預設白天） ========== */
+:root {
+  --bg: #f4ece2;
+  --card: #fdfaf6;
+  --ink: #2b231b;
+  --sub: #7d6e5c;
+  --gold: #c9a56b;
+  --gold-soft: rgba(201, 165, 107, 0.28);
+  --box: #ffffff;
+  --bar: #2b231b;
+  --bartxt: #f5e9cf;
+  --pbg: #f0e7d9;
+  --border: rgba(201, 165, 107, 0.30);
+  --shadow: 0 10px 36px rgba(43, 35, 27, 0.07);
+  --serif: "Noto Serif TC", "Songti TC", "PingFang TC", serif;
+  --en: "Playfair Display", Georgia, serif;
+  --sans: "Montserrat", -apple-system, "PingFang TC", sans-serif;
+  --body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  --num: "Montserrat", "Noto Sans TC", sans-serif;
+  --c1: #9a6b1f;
+  --c2: #2f5d57;
+  --radius-lg: 4.3rem;
+  --radius-md: 3rem;
+  --radius-sm: 2.6rem;
+}
+
+/* 預設晚上 */
+body.dark {
+  --bg: #0d0c0a;
+  --card: #15130f;
+  --ink: #f4ebd9;
+  --sub: #b5a68a;
+  --gold: #d4b06a;
+  --gold-soft: rgba(212, 176, 106, 0.28);
+  --box: #1d1a15;
+  --bar: #d4b06a;
+  --bartxt: #15130f;
+  --pbg: #1a1712;
+  --border: rgba(212, 176, 106, 0.28);
+  --shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  --c1: #e8c36f;
+  --c2: #9fd3c7;
+}
+
+/* ========== 國慶主題（紅金） ========== */
+body.theme-nd {
+  --bg: #f0e4dc;
+  --card: #fdf6f0;
+  --ink: #3a1a1a;
+  --sub: #8a4a4a;
+  --gold: #c94a3a;
+  --gold-soft: rgba(201, 74, 58, 0.28);
+  --box: #fff8f4;
+  --bar: #8a1a1a;
+  --bartxt: #fce8e0;
+  --pbg: #f5e6e0;
+  --border: rgba(201, 74, 58, 0.32);
+  --c1: #b83a2a;
+  --c2: #8a2a2a;
+}
+body.theme-nd.dark {
+  --bg: #1a0a0a;
+  --card: #251010;
+  --ink: #f8e8e0;
+  --sub: #d4a0a0;
+  --gold: #e87060;
+  --gold-soft: rgba(232, 112, 96, 0.28);
+  --box: #2e1515;
+  --bar: #e87060;
+  --bartxt: #251010;
+  --pbg: #2a1212;
+  --border: rgba(232, 112, 96, 0.28);
+  --c1: #f08070;
+  --c2: #d06050;
+}
+
+/* ========== 新春主題 ========== */
+body.theme-ny {
+  --bg: #e8dccb;
+  --card: #fbf5ea;
+  --ink: #3a1f1a;
+  --sub: #7a5a50;
+  --gold: #b8863b;
+  --gold-soft: rgba(184, 134, 59, 0.28);
+  --box: #f5e9d7;
+  --bar: #7a1f1d;
+  --bartxt: #f3d9a0;
+  --pbg: #f1e6d4;
+  --border: rgba(184, 134, 59, 0.32);
+  --c1: #8a6428;
+  --c2: #8e2a22;
+}
+body.theme-ny.dark {
+  --bg: #1d0a0b;
+  --card: #2a0f10;
+  --ink: #f6e7c8;
+  --sub: #d2b99a;
+  --gold: #d4a853;
+  --gold-soft: rgba(212, 168, 83, 0.28);
+  --box: #3a1617;
+  --bar: #d4a853;
+  --bartxt: #2a0f10;
+  --pbg: #341314;
+  --border: rgba(212, 168, 83, 0.30);
+  --c1: #e8c36f;
+  --c2: #f0a79b;
+}
+
+/* ========== 七夕主題 ========== */
+body.theme-qx {
+  --bg: #f7e8ee;
+  --card: #fdf6f9;
+  --ink: #3a1f2a;
+  --sub: #8a5a6e;
+  --gold: #c97a8e;
+  --gold-soft: rgba(201, 122, 142, 0.28);
+  --box: #fff8fb;
+  --bar: #8a3a55;
+  --bartxt: #fce8ef;
+  --pbg: #f5e4eb;
+  --border: rgba(201, 122, 142, 0.30);
+  --c1: #b85a72;
+  --c2: #8a4a6a;
+}
+body.theme-qx.dark {
+  --bg: #1a0c12;
+  --card: #251018;
+  --ink: #f8e6ed;
+  --sub: #d4a8b8;
+  --gold: #e8a0b4;
+  --gold-soft: rgba(232, 160, 180, 0.28);
+  --box: #2e1520;
+  --bar: #e8a0b4;
+  --bartxt: #251018;
+  --pbg: #2a121c;
+  --border: rgba(232, 160, 180, 0.28);
+  --c1: #f0b0c0;
+  --c2: #d48aa0;
+}
+
+/* ========== 中秋主題 ========== */
+body.theme-mid {
+  --bg: #e8e4d8;
+  --card: #f8f4ea;
+  --ink: #2a2a1f;
+  --sub: #6a6a50;
+  --gold: #c9a84a;
+  --gold-soft: rgba(201, 168, 74, 0.28);
+  --box: #fdfaf0;
+  --bar: #2a3a4a;
+  --bartxt: #e8d8a0;
+  --pbg: #ebe6d6;
+  --border: rgba(201, 168, 74, 0.30);
+  --c1: #9a7a2a;
+  --c2: #3a5a6a;
+}
+body.theme-mid.dark {
+  --bg: #0c1018;
+  --card: #121820;
+  --ink: #f0e8d0;
+  --sub: #a8b0a0;
+  --gold: #d4b85a;
+  --gold-soft: rgba(212, 184, 90, 0.28);
+  --box: #1a222c;
+  --bar: #d4b85a;
+  --bartxt: #121820;
+  --pbg: #161e28;
+  --border: rgba(212, 184, 90, 0.28);
+  --c1: #e8c86a;
+  --c2: #7aa0b0;
+}
+
+/* ========== 聖誕主題 ========== */
+body.theme-xmas {
+  --bg: #e8e4dc;
+  --card: #f6f2ea;
+  --ink: #1f2a1f;
+  --sub: #5a6a5a;
+  --gold: #b89a4a;
+  --gold-soft: rgba(184, 154, 74, 0.28);
+  --box: #faf7f0;
+  --bar: #1a3a2a;
+  --bartxt: #e8d8a0;
+  --pbg: #e6e2d8;
+  --border: rgba(184, 154, 74, 0.30);
+  --c1: #8a6a2a;
+  --c2: #2a5a3a;
+}
+body.theme-xmas.dark {
+  --bg: #0a120e;
+  --card: #101a14;
+  --ink: #e8f0e8;
+  --sub: #a0b8a8;
+  --gold: #d4b85a;
+  --gold-soft: rgba(212, 184, 90, 0.28);
+  --box: #16221a;
+  --bar: #d4b85a;
+  --bartxt: #101a14;
+  --pbg: #141e18;
+  --border: rgba(212, 184, 90, 0.28);
+  --c1: #e8c86a;
+  --c2: #6ab88a;
+}
+
+:root { --sheen: rgba(255, 255, 255, 0.55); --warn: #c46a12; }
+body.dark { --sheen: rgba(255, 255, 255, 0.10); --warn: #f0a34a; }
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  transition: background 0.45s ease, color 0.35s ease;
+}
+body { min-height: 100dvh; -webkit-tap-highlight-color: transparent; }
+
+/* ========== 版面：左預覽、右設定（平板橫向）／上下堆疊（直向、手機） ========== */
+.studio {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: max(16px, env(safe-area-inset-top, 0px)) 16px max(16px, env(safe-area-inset-bottom, 0px));
+}
+.stage { display: flex; justify-content: center; align-items: flex-start; min-width: 0; }
+@media (min-width: 900px) {
+  .studio { grid-template-columns: minmax(0, 1fr) minmax(380px, 460px); align-items: start; }
+  .stage { position: sticky; top: 16px; }
+}
+
+/* ========== 主卡片 ========== */
+.card {
+  position: relative;
+  overflow: hidden;
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding: 2.7rem 4.1rem;
+  text-align: center;
+  width: 94vw;
+  max-width: 620px;
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  border: none;
+  border-top: 1.4rem solid var(--gold);
+  border-bottom: 1.4rem solid var(--gold);
+  transition: background 0.45s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+.frame {
+  position: relative;
+  z-index: 1;
+  border: 1px solid var(--border);
+  border-radius: 3rem;
+  padding: 7rem 3.8rem 5.4rem;
+  transition: transform 4s ease;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3.1rem;
+  margin: 0 0 3.8rem;
+}
+.eyebrow i { flex: 0 0 6.6rem; height: 1px; background: var(--gold); opacity: 0.75; }
+.eyebrow span {
+  flex: none;
+  white-space: nowrap;
+  font: 600 2.5rem var(--sans);
+  letter-spacing: 0.32em;
+  margin-right: -0.32em;
+  color: var(--sub);
+}
+
+.logo {
+  margin: 0 0 4.4rem;
+  font-size: 7.4rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3.7rem;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+.logo b { font-family: var(--en); font-weight: 700; }
+.logo b i { color: var(--gold); font-style: normal; display: inline-block; }
+.logo .divider { width: 1px; height: 6rem; background: var(--gold); opacity: 0.5; }
+.logo span { font-family: var(--serif); font-weight: 500; }
+
+.pill {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem 1.4rem;
+  max-width: 100%;
+  padding: 1.7rem 3.6rem;
+  border-radius: 999px;
+  background: var(--pbg);
+  border: 1px solid var(--border);
+  margin-bottom: 4.4rem;
+}
+.pill .dot { width: 1.2rem; height: 1.2rem; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+.pill .sep { color: var(--sub); opacity: 0.8; }
+#oEn { font: 700 2.4rem var(--sans); letter-spacing: 0.12em; color: var(--ink); }
+#oTag { font: 500 2.8rem var(--serif); letter-spacing: 0.08em; color: var(--sub); }
+
+.exclusive {
+  font: 500 2.6rem var(--sans);
+  letter-spacing: 0.4em;
+  margin-right: -0.4em;
+  color: var(--sub);
+  margin-bottom: 3.2rem;
+}
+
+.ttl {
+  font: 500 5rem var(--serif);
+  letter-spacing: 0.08em;
+  margin: 0 0 2.8rem;
+  display: none;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+.ttl.show { display: block; }
+.ttl.long { font-size: 4rem; }
+
+.slot {
+  position: relative;
+  overflow: hidden;
+  background: var(--box);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 4.8rem 2.4rem 4.4rem;
+  margin-bottom: 4.8rem;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin: -1.2rem auto 3.2rem;
+  padding: 1.1rem 2.8rem;
+  border-radius: 999px;
+  background: var(--bar);
+  color: var(--bartxt);
+  font: 600 2.5rem var(--body);
+  letter-spacing: 0.08em;
+}
+.badge i { width: 1.2rem; height: 1.2rem; border-radius: 50%; background: currentColor; }
+.badge.soon { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
+.slot.full .badge { display: none; }
+.big-time {
+  font: 600 10.7rem var(--en);
+  font-variant-numeric: lining-nums;
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--ink);
+}
+.slot.full .big-time { font: 700 8.6rem var(--body); letter-spacing: 0.04em; }
+.time-note {
+  margin-top: 4.4rem;
+  padding-top: 3.2rem;
+  border-top: 1px solid var(--border);
+  font: 400 2.8rem var(--body);
+  color: var(--gold);
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+  white-space: pre-line;
+  text-wrap: balance;
+}
+.slot.full .time-note { font-size: 3.2rem; }
+
+.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem;
+}
+.two .box {
+  background: var(--box);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 4rem 3.6rem 3.8rem;
+  text-align: left;
+}
+.two small {
+  display: block;
+  font: 500 2.1rem var(--sans);
+  letter-spacing: 0.3em;
+  color: var(--sub);
+  margin-bottom: 1.8rem;
+}
+.hd {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 1.4rem;
+  min-height: 5.4rem;
+}
+.two strong { font: 600 4.2rem var(--serif); color: var(--ink); line-height: 1.25; }
+#oName { font: 700 3.8rem var(--sans); letter-spacing: 0.1em; }
+.role { font: 400 3rem var(--serif); color: var(--sub); }
+.two .sub {
+  margin-top: 0.6rem;
+  font: 400 2.3rem var(--body);
+  letter-spacing: 0.04em;
+  color: var(--sub);
+  line-height: 1.7;
+}
+
+.walk {
+  position: relative;
+  overflow: hidden;
+  margin-top: 4rem;
+  background: var(--bar);
+  color: var(--bartxt);
+  border-radius: 3rem;
+  padding: 3.6rem 2.4rem 3.8rem;
+  box-shadow: 0 1.2rem 2.4rem rgba(0, 0, 0, 0.16);
+  display: none;
+}
+.walk.show { display: block; }
+.walk h4 {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0 1.5rem;
+  font-weight: 500;
+  font-size: 3.8rem;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+}
+.walk h4 small { font: 500 3rem var(--sans); letter-spacing: 0.2em; }
+.walk h4 small::after { content: "/"; margin-left: 1.5rem; opacity: 0.7; }
+.walk p {
+  margin: 1.4rem 0 0;
+  font: 400 2.5rem var(--body);
+  opacity: 0.8;
+  line-height: 1.6;
+  letter-spacing: 0.03em;
+}
+
+.hide { display: none !important; }
+.oth { margin-top: 1.6rem; font-size: 2.7rem; color: var(--sub); line-height: 1.5; }
+.dr {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0.7rem 1.8rem;
+  font: 600 4.6rem var(--en);
+  font-variant-numeric: lining-nums;
+  margin: 1rem 0;
+}
+.dr span { flex: 1; max-width: 48rem; text-align: left; }
+.dr span:only-child { flex: none; text-align: center; }
+
+/* ========== 動畫（body.fxon 才啟用） ========== */
+@keyframes rise { from { opacity: 0; transform: translateY(2.4rem); filter: blur(0.6rem); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes swap { from { opacity: 0; transform: translateY(1.8rem) scale(0.96); filter: blur(0.6rem); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes sheen { 0% { left: -60%; } 22%, 100% { left: 140%; } }
+@keyframes glow { 0%, 100% { box-shadow: 0 0 0 0 var(--gold-soft); } 50% { box-shadow: 0 0 4rem 0.6rem var(--gold-soft); } }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 var(--gold); } 70%, 100% { box-shadow: 0 0 0 1.8rem transparent; } }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+@keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-0.8rem); } }
+@keyframes grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes glint { 0%, 86%, 100% { transform: none; text-shadow: none; } 92% { transform: translateY(-0.6rem) rotate(-8deg); text-shadow: 0 0 2.4rem var(--gold); } }
+@keyframes flash { 0%, 100% { background: transparent; } 30% { background: var(--gold-soft); } }
+@keyframes ripple { from { transform: translate(-50%, -50%) scale(0.2); opacity: 0.8; } to { transform: translate(-50%, -50%) scale(9); opacity: 0; } }
+
+.fxon .intro .rv { animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i) * 110ms); }
+.fxon .intro .logo .divider { animation: grow 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.5s both; }
+.fxon .logo b i { animation: glint 9s ease-in-out 3s infinite; }
+.fxon .pill .dot { animation: pulse 2.2s ease-out infinite; }
+.fxon .badge i { animation: blink 1.4s ease-in-out infinite; }
+.fxon #oBox.swap { animation: swap 0.8s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.fxon .slot { animation: glow 5s ease-in-out infinite; }
+.fxon .intro .slot.rv { animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both, glow 5s ease-in-out infinite; animation-delay: calc(var(--i) * 110ms), 1.4s; }
+.fxon .walk { animation: floaty 6s ease-in-out infinite; }
+.fxon .intro .walk.rv { animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both, floaty 6s ease-in-out infinite; animation-delay: calc(var(--i) * 110ms), 1.6s; }
+.fxon .slot::after, .fxon .walk::after, .fxon .gobtn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -60%;
+  width: 38%;
+  background: linear-gradient(100deg, transparent, var(--sheen), transparent);
+  transform: skewX(-18deg);
+  pointer-events: none;
+  animation: sheen 7s ease-in-out 2s infinite;
+}
+.fxon .walk::after { animation-delay: 4.5s; }
+.fxon.dark .big-time { text-shadow: 0 0 3rem var(--gold-soft); }
+.capturing *, .capturing *::after { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .fxon *, .fxon *::after { animation: none !important; }
+}
+
+/* ========== 全螢幕展示 ========== */
+body.present { overflow: hidden; background: var(--card); }
+html:has(body.present) { background: var(--card); }
+body.present .panel { display: none; }
+body.present .card {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  width: 100% !important;
+  max-width: none;
+  height: 100%;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 2.4rem;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  -webkit-user-select: none;
+}
+body.present .frame {
+  width: 100%;
+  max-width: none;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 5rem 3.8rem;
+}
+body.present .pill { align-self: center; }
+body.present .slot { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+body.present .slot .badge { align-self: center; }
+.stage .card { cursor: pointer; }
+
+.ripple {
+  position: fixed;
+  z-index: 55;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  pointer-events: none;
+  animation: ripple 0.9s ease-out forwards;
+}
+
+/* 右上角隱藏出口：長按 1.5 秒 */
+.hot {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 120px;
+  height: 120px;
+  z-index: 60;
+  display: none;
+  place-items: center;
+  touch-action: none;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+body.present .hot { display: grid; }
+.hot svg { width: 64px; height: 64px; opacity: 0; transition: opacity 0.2s; transform: rotate(-90deg); }
+.hot circle { fill: none; stroke: var(--gold); stroke-width: 4; stroke-dasharray: 176; stroke-dashoffset: 176; stroke-linecap: round; }
+.hot.holding svg { opacity: 1; }
+.hot.holding circle { stroke-dashoffset: 0; transition: stroke-dashoffset 1.5s linear; }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+  z-index: 70;
+  transform: translate(-50%, 20px);
+  opacity: 0;
+  pointer-events: none;
+  padding: 12px 22px;
+  border-radius: 999px;
+  background: rgba(20, 17, 13, 0.88);
+  color: #f5e9cf;
+  font: 500 15px var(--body);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  transition: opacity 0.3s, transform 0.3s;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* ========== 設定面板 ========== */
+.panel {
+  background: var(--pbg);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 18px 18px 0;
+  font: 15px/1.5 var(--body);
+  min-width: 0;
+}
+.ph { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.ph b { font: 600 20px var(--serif); letter-spacing: 0.06em; }
+.sync { font-size: 12px; color: var(--sub); }
+.status {
+  margin: 12px 0 6px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--box);
+  border: 1px solid var(--border);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.status.warn { border-color: var(--warn); color: var(--warn); }
+.step { padding: 16px 0; border-top: 1px solid var(--border); margin-top: 10px; border-radius: 12px; }
+.step.flash { animation: flash 1.2s ease; }
+.step h3 { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; font: 600 15px var(--body); letter-spacing: 0.04em; }
+.step h3 em {
+  font-style: normal;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: #16130e;
+  display: grid;
+  place-items: center;
+  font: 700 13px var(--sans);
+}
+button, select, input { font: inherit; font-size: 15px; }
+.modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.mode {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 12px;
+  border-radius: 16px;
+  border: 1.5px solid var(--border);
+  background: var(--box);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+.mode:active, .c:active, .sb:active, .gobtn:active { transform: scale(0.97); }
+.mode i { font-style: normal; font-size: 22px; line-height: 1; }
+.mode b { font-size: 15px; }
+.mode small { font-size: 12px; color: var(--sub); line-height: 1.4; }
+.mode.on { border-color: var(--gold); background: var(--gold-soft); box-shadow: 0 0 0 3px var(--gold-soft); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.c {
+  min-height: 42px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(201, 165, 107, 0.48);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+.c.on { background: var(--gold); color: #16130e; border-color: var(--gold); font-weight: 600; }
+.c:disabled { opacity: 0.35; cursor: default; }
+.quick { margin-bottom: 10px; }
+.quick .c { min-height: 38px; padding: 6px 14px; font-size: 14px; }
+.sg { display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 8px; }
+.sb {
+  min-height: 54px;
+  padding: 8px 0;
+  border-radius: 12px;
+  border: 1px solid rgba(201, 165, 107, 0.48);
+  background: var(--box);
+  color: var(--ink);
+  cursor: pointer;
+  line-height: 1.2;
+  font: 600 16px var(--sans);
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+.sb small { display: block; font: 500 11px var(--body); margin-top: 3px; opacity: 0.8; }
+.sb.on { background: var(--gold); color: #16130e; border-color: var(--gold); }
+.hint { margin: 8px 0 0; font-size: 12px; color: var(--sub); }
+.seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 4px; border-radius: 12px; background: var(--box); border: 1px solid var(--border); }
+.seg button { min-height: 40px; border: 0; border-radius: 9px; background: transparent; color: var(--ink); cursor: pointer; }
+.seg button.on { background: var(--gold); color: #16130e; font-weight: 600; }
+.sw { display: flex; align-items: center; gap: 10px; margin-top: 12px; font-size: 14px; cursor: pointer; }
+.sw input { width: 20px; height: 20px; accent-color: var(--gold); flex: none; }
+label.f { display: block; margin-top: 12px; font-size: 13px; color: var(--sub); }
+select, input[type=time], .tx {
+  width: 100%;
+  min-height: 42px;
+  padding: 9px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(201, 165, 107, 0.42);
+  background: var(--card);
+  color: var(--ink);
+  margin-top: 6px;
+}
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.season-info { font-size: 12px; color: var(--sub); margin-top: 6px; }
+details.adv { border-top: 1px solid var(--border); }
+details.adv summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+}
+details.adv summary::-webkit-details-marker { display: none; }
+details.adv summary::after { content: "＋"; color: var(--gold); }
+details.adv[open] summary::after { content: "－"; }
+details.adv > div { padding: 0 0 16px; }
+details.adv h4 { margin: 14px 0 6px; font-size: 13px; font-weight: 500; color: var(--sub); }
+details.adv h4:first-child { margin-top: 0; }
+.go {
+  position: sticky;
+  bottom: 0;
+  margin: 6px -18px 0;
+  padding: 14px 18px calc(14px + env(safe-area-inset-bottom, 0px));
+  border-radius: 0 0 24px 24px;
+  background: linear-gradient(to bottom, transparent, var(--pbg) 28%);
+  text-align: center;
+}
+.gobtn {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 18px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--bar);
+  color: var(--bartxt);
+  font: 700 18px var(--body);
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.15s;
+}
+.go small { display: block; margin-top: 8px; font-size: 12px; color: var(--sub); }
+@media (max-width: 520px) {
+  .modes { grid-template-columns: 1fr; }
+  .mode { flex-direction: row; align-items: center; gap: 12px; }
+  .mode small { margin-left: auto; text-align: right; }
+}
+</style>
+</head>
+<body>
+<main class="studio">
+ <section class="stage" id="stage">
+  <div class="card" id="card">
+   <canvas class="fx" id="fx"></canvas>
+   <div class="frame" id="frame">
+    <div class="eyebrow rv" style="--i:0"><i></i><span>HAIR SALON &amp; GROOMING</span><i></i></div>
+
+    <div class="logo rv" style="--i:1">
+      <b>WE<i>a</i></b>
+      <div class="divider"></div>
+      <span>髮粧</span>
+    </div>
+
+    <div class="pill rv" style="--i:2">
+      <span class="dot"></span>
+      <span id="oEn">TODAY'S APPOINTMENT</span>
+      <span class="sep">·</span>
+      <span id="oTag">今日限定空檔</span>
+    </div>
+
+    <div class="exclusive rv" id="oExclusive" style="--i:3">— EXCLUSIVE TIME SLOT —</div>
+
+    <h2 class="ttl rv" id="oTtl" style="--i:3"></h2>
+
+    <div class="slot rv" id="oSlot" style="--i:4">
+      <div><div class="badge" id="oBadge"><i></i><span id="oBadgeT"></span></div></div>
+      <div id="oBox">
+        <div class="big-time" id="oTime">15:00 – 16:00</div>
+      </div>
+      <div class="time-note" id="oNote">✦ 專屬時段 · 僅此 1 席名額 ✦</div>
+    </div>
+
+    <div class="two rv" style="--i:5">
+      <div class="box">
+        <small>SERVICE</small>
+        <div class="hd"><strong id="oSvc">男士剪髮</strong></div>
+        <div class="sub" id="oSd">俐落輪廓 / 專業剪裁</div>
+      </div>
+      <div class="box">
+        <small>STYLIST</small>
+        <div class="hd"><strong id="oName">NEO</strong><span class="role" id="oTitle">美髮師</span></div>
+        <div class="sub" id="oTd">資深型格髮藝設計</div>
+      </div>
+    </div>
+
+    <div class="walk rv" id="oWalkWrap" style="--i:6">
+      <h4>
+        <small id="oWe">WELCOME WALK-IN</small>
+        <span id="oWz">歡迎光臨</span>
+      </h4>
+      <p id="oWalk"></p>
+    </div>
+   </div>
+  </div>
+ </section>
+
+ <aside class="panel" id="panel">
+  <div class="ph"><b>櫥窗設定</b><span class="sync">設定會記在這台裝置上</span></div>
+  <div class="status" id="status"></div>
+
+  <section class="step">
+    <h3><em>1</em>今天要顯示什麼？</h3>
+    <div class="modes">
+      <button class="mode" id="v0"><i>✂︎</i><b>今日開放單剪</b><small>大字顯示最近的空檔</small></button>
+      <button class="mode" id="v1"><i>⏳</i><b>今日僅餘時段</b><small>列出所有剩下的整點</small></button>
+      <button class="mode" id="v2"><i>🧧</i><b>過年檔期</b><small>春節特別預約</small></button>
+    </div>
+  </section>
+
+  <section class="step" id="step2">
+    <h3><em>2</em><span id="sgT">開放時段</span></h3>
+    <div class="chips quick">
+      <button class="c" id="sAll">全部開放</button>
+      <button class="c" id="sPm">13:00 之後</button>
+      <button class="c" id="sPrev">↺ 沿用上次</button>
+      <button class="c" id="sNone">清空</button>
+    </div>
+    <div class="sg" id="sg"></div>
+    <p class="hint">點一下開放、再點一下取消；已經過去的時段會自動隱藏</p>
+  </section>
+
+  <section class="step">
+    <h3><em>3</em>設計師與服務<small style="font-weight:400;opacity:.6">（單剪／洗剪模式的服務文字由模式決定）</small></h3>
+    <div class="chips" id="cSty"></div>
+    <div class="chips" id="cSvc" style="margin-top:10px"></div>
+  </section>
+
+  <section class="step">
+    <h3><em>4</em>外觀</h3>
+    <div class="seg" id="segTh">
+      <button data-th="auto">依時間自動</button>
+      <button data-th="white">白天</button>
+      <button data-th="dark">晚上</button>
+    </div>
+    <label class="f">季節主題
+      <select id="sSeason">
+        <option value="auto">自動（依日期切換）</option>
+        <option value="default">預設</option>
+        <option value="nd">國慶</option>
+        <option value="ny">新春</option>
+        <option value="qx">七夕</option>
+        <option value="mid">中秋</option>
+        <option value="xmas">聖誕</option>
+      </select>
+    </label>
+    <div class="season-info" id="seasonInfo">目前：自動偵測中…</div>
+    <label class="sw"><input type="checkbox" id="fxOn"> 動態效果（飄落粒子、光澤、入場動畫）</label>
+    <label class="sw"><input type="checkbox" id="autoP"> 打開頁面時直接進入展示</label>
+    <label class="sw"><input type="checkbox" id="autoSw" checked> 18:45 後自動切到「今日開放單剪」（每 20 分鐘・最晚 19:40）</label>
+  </section>
+
+  <details class="adv">
+    <summary>文字細節</summary>
+    <div>
+      <h4>主標題</h4>
+      <select id="sHt"></select>
+      <input class="tx hide" id="hc" placeholder="自訂主標題（N 代表剩餘數量）">
+      <input class="tx hide" id="nd" placeholder="檔期日期（選填，例如 2/5 – 2/10）">
+      <h4>服務說明</h4>
+      <input class="tx" id="dc" placeholder="自訂服務說明（留空使用預設）">
+      <h4>副標（可複選）</h4>
+      <div class="chips" id="cSub"></div>
+      <input class="tx" id="sc" placeholder="自訂副標（選填）">
+      <label class="f">約滿後中間文字<select id="sFb"></select></label>
+      <input class="tx hide" id="fbc" placeholder="自訂大字（4 字內）">
+      <input class="tx hide" id="fbs" placeholder="自訂小字（用空白分成兩行）">
+      <label class="f">標籤<select id="sTag"></select></label>
+      <input class="tx hide" id="tc" placeholder="自訂標籤">
+      <label class="f">歡迎條文字<select id="sWlk"></select></label>
+      <input class="tx hide" id="wc" placeholder="自訂歡迎文字">
+    </div>
+  </details>
+
+  <details class="adv">
+    <summary>日夜切換時間</summary>
+    <div class="g2">
+      <label class="f">幾點後切白天<input type="time" id="wf"></label>
+      <label class="f">幾點後切晚上<input type="time" id="wt"></label>
+    </div>
+  </details>
+
+  <details class="adv">
+    <summary>產生 IG / FB 圖片</summary>
+    <div class="chips">
+      <button class="c" id="dStory">限時動態 1080×1920</button>
+      <button class="c" id="dPost">貼文 1080×1350</button>
+    </div>
+  </details>
+
+  <details class="adv">
+    <summary>預覽時間（測試用）</summary>
+    <div>
+      <label class="sw"><input type="checkbox" id="live" checked> 使用即時時間</label>
+      <input type="range" id="sim" min="600" max="1230" step="5" value="1020" style="width:100%;margin-top:10px">
+      <div id="simt" class="sync"></div>
+    </div>
+  </details>
+
+  <div class="sync" id="syncSt" style="margin:10px 0 0">同步：連線中…</div>
+  <div class="go">
+    <button class="gobtn" id="bFull">▶ 開始櫥窗展示</button>
+    <small>展示中長按畫面右上角 1.5 秒即可回到設定</small>
+  </div>
+ </aside>
+</main>
+
+<div class="hot" id="hot"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="28"/></svg></div>
+<div class="toast" id="toast"></div>
+
+<script>
+var $=function(i){return document.getElementById(i)};
+var STY=[['NEO','美髮師','資深型格髮藝設計'],['EVIN','美髮師','專業髮藝設計'],['現場安排','','依現場狀況安排設計師']];
+var SVC=[['男士剪髮','俐落輪廓 / 專業剪裁'],['專屬剪裁','俐落輪廓 / 專業剪裁'],['設計剪裁','輪廓設計 / 專業剪裁'],['全項目','剪・染・燙・護(洗髮除外)']];
+var SUB=['歡迎預約','男女皆宜','專屬服務','一對一服務'];
+var TAG=['今日限定空檔','今日限定・席位開放','當日預約・席位有限','自訂'];
+var FB=[['當日候位','依現場狀況\n彈性安排',0],['僅限預約','歡迎預約\n明日時段',1],['預約優先','敬請事先\n預約洽詢',1],['自訂','',0]];
+var HT0=['今日免預約・男士單剪','今日加開設計剪裁','今日席位開放','自訂'],HT1=['今日開放設計剪裁・男女皆宜','今日預約即將額滿・僅餘 N 個時段','今日僅餘少數席位','自訂'];
+var HT2=['新春特別檔期','新春限定預約','新春席位開放','自訂'];
+function mt(n){var e=EV(),H=e===1?HT1:e===2?HT2:HT0,i=S.ht[e]||0,t=i===H.length-1?(S.hc[e]||H[0]):H[i];return t.replace(/\bN\b/g,n)}
+var WLK=['路過貴賓請洽櫃檯\n依到場順序入座','路過貴賓歡迎洽詢\n依到場順序入座','自訂'];
+var D={v:0,si:0,vi:0,sub:[0,1,2],ti:0,wi:0,th:'auto',wf:'18:00',wt:'06:00',day:'',a:[],b:[],c:[],prev:null,ht:[0,0,0],hc:['','',''],nd:'',season:'auto',sc:'',dc:'',tc:'',wc:'',fb:0,fbc:'',fbs:'',fx:true,autoP:false,asw:true};
+var S=JSON.parse(JSON.stringify(D)),KEY='wea-v7';
+var boxHTML='',introKey='',seasonNow='',darkNow=false;
+
+function pad(n){return n<10?'0'+n:''+n}
+function f(m){return pad(m/60|0)+':'+pad(m%60)}
+function hm(s){var p=(s||'0:0').split(':');return(+p[0])*60+(+p[1])}
+function today(){var d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+function nowM(){if($('live').checked){var d=new Date();return d.getHours()*60+d.getMinutes()}return +$('sim').value}
+/* 18:45 後，「今日僅餘時段」自動切成「今日開放單剪」(每 20 分鐘，最晚 19:40) */
+var SW_AT=1125;
+function EV(){return(S.v===1&&S.asw!==false&&nowM()>=SW_AT)?0:S.v}
+function isP(){return document.body.classList.contains('present')}
+
+/* ========== 自動季節判斷 ========== */
+function detectSeason(){
+  var d=new Date(),m=d.getMonth()+1,day=d.getDate();
+  if(m===10&&day===10)return{key:'nd',name:'國慶日（紅金主題）'};
+  if(m===12&&day>=24&&day<=26)return{key:'xmas',name:'聖誕（深綠金主題）'};
+  if(m===1&&day===1)return{key:'ny',name:'元旦／新春氛圍'};
+  // 七夕、中秋為農曆節日，先用固定區間示意
+  if(m===8&&day>=1&&day<=15)return{key:'qx',name:'七夕氛圍（柔粉）'};
+  if(m===9&&day>=15&&day<=30)return{key:'mid',name:'中秋氛圍（深藍暖金）'};
+  if(m===2&&day>=1&&day<=20)return{key:'ny',name:'新春氛圍（紅金）'};
+  return{key:'default',name:'預設日夜主題'};
+}
+
+function cd(a,k){for(var i=0;i<a.length;i++){if(a[i].slice(0,5)===k)return 3}return 0}
+function cset(a,k,c){for(var i=a.length-1;i>=0;i--){if(a[i].slice(0,5)===k)a.splice(i,1)}if(c>0)a.push(k+'|'+c)}
+function rows(L,cls){return L.length?'<div class="'+cls+'"><span>'+L.join('・')+'</span></div>':''}
+function CL(v){return v===2?1230:v===0?1185:1170}
+function ST(v){return v===0?20:v===1?60:30}
+function AR(v){return v===2?S.c:v===1?S.b:S.a}
+function SA(v,r){if(v===2)S.c=r;else if(v===1)S.b=r;else S.a=r}
+function slots(v){var r=[];for(var t=660;t<=(v===1?1140:CL(v));t+=ST(v))r.push(f(t));return r}
+function past(v,k,m){var t=hm(k);if(m>CL(v))return true;if(v===1)return cd(AR(1),f(t+60))>0?m>t+40:m>=t;return m>t+GR(v)}
+function GR(v){return v===0?5:10}
+function fill(id,arr){var s=$(id);arr.forEach(function(t,i){var o=document.createElement('option');o.value=i;o.textContent=t;s.appendChild(o)})}
+function chips(id,arr,on,fn){var b=$(id);b.innerHTML='';arr.forEach(function(x,i){var c=document.createElement('button');c.className='c'+(on(i)?' on':'');c.textContent=x[0]||x;c.onclick=function(){fn(i)};b.appendChild(c)})}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}push()}
+
+/* ========== 多裝置同步（Claude artifact db）：遠端裝置改設定，櫥窗那台即時更新 ========== */
+var DOC=null,CID=Math.random().toString(36).slice(2),wTm=0,lastSync='',busy=false,again=false,synced=false;
+function shared(){var o=JSON.parse(JSON.stringify(S));delete o.autoP;return JSON.stringify(o)}
+function syncMsg(t){var e=$('syncSt');if(e)e.textContent=t}
+function push(){if(!DOC||!synced)return;clearTimeout(wTm);wTm=setTimeout(flush,500)}
+function flush(){
+  if(busy){again=true;return}
+  var s=shared();if(s===lastSync)return;
+  busy=true;
+  DOC.set({cid:CID,t:Date.now(),s:s}).then(function(){lastSync=s;syncMsg('☁ 多裝置同步中')}).catch(function(){syncMsg('⚠ 同步失敗，僅存在本機')}).then(function(){busy=false;if(again){again=false;flush()}});
+}
+function applyRemote(snap){
+  if(!snap.exists){synced=true;flush();return}
+  var d=snap.data()||{};
+  if(d.cid===CID||typeof d.s!=='string'||d.s===lastSync){synced=true;return}
+  var q;try{q=JSON.parse(d.s)}catch(e){synced=true;return}
+  var keep=S.autoP;
+  S=Object.assign(JSON.parse(JSON.stringify(D)),q);S.autoP=keep;
+  if(S.v>2)S.v=0;S.ht=S.ht.slice(0,3);S.hc=S.hc.slice(0,3);
+  lastSync=shared();synced=true;syncMsg('☁ 多裝置同步中');
+  render();
+}
+(function connect(n){
+  if(!(window.claude&&window.claude.use)){if(n<20)setTimeout(function(){connect(n+1)},500);else syncMsg('同步：僅本機（未連線）');return}
+  window.claude.use('db').then(function(db){
+    if(!db){syncMsg('同步：僅本機（需登入 Claude 才能同步）');return}
+    DOC=db.doc('state/main');
+    DOC.onSnapshot(applyRemote,function(){syncMsg('⚠ 同步中斷，僅存在本機')});
+  }).catch(function(){syncMsg('同步：僅本機（未連線）')});
+})(0);
+function retrig(el,cls){el.classList.remove(cls);void el.offsetWidth;el.classList.add(cls)}
+function playIntro(){retrig($('frame'),'intro')}
+function dur(d){return d<60?d+' 分鐘':(d/60|0)+' 小時'+(d%60?' '+d%60+' 分':'')}
+function period(k){var h=hm(k)/60;return h<12?'上午':h<17?'下午':'晚間'}
+var tt=0;function toast(t){var e=$('toast');e.textContent=t;e.classList.add('show');clearTimeout(tt);tt=setTimeout(function(){e.classList.remove('show')},3800)}
+
+var rq=0;function render(){if(rq)return;rq=1;requestAnimationFrame(function(){rq=0;rn()})}
+function rn(){
+  if(S.day!==today()){
+    if(S.a.length||S.b.length||S.c.length)S.prev={a:S.a,b:S.b,c:S.c};
+    S.day=today();S.a=[];S.b=[];S.c=[];
+  }
+  var m=nowM(),v=EV(),L=slots(v).filter(function(k){return cd(AR(v),k)>0&&!past(v,k,m)}),n=L.length,closed=m>CL(v);
+  var w,x=S.th;if(x==='auto'){var a=hm(S.wf),b=hm(S.wt);w=a<=b?(m>=a&&m<b):(m>=a||m<b)}else w=x==='white';
+  document.body.classList.toggle('dark',!w);
+  document.body.classList.toggle('fxon',!!S.fx);
+
+  // ===== 季節主題 =====
+  document.body.classList.remove('theme-nd','theme-ny','theme-qx','theme-mid','theme-xmas');
+  var seasonKey='default',seasonName='預設日夜主題';
+  if(S.season==='auto'){var dt=detectSeason();seasonKey=dt.key;seasonName='自動 → '+dt.name}
+  else if(S.season&&S.season!=='default'){seasonKey=S.season;seasonName='手動 → '+({nd:'國慶',ny:'新春',qx:'七夕',mid:'中秋',xmas:'聖誕'}[S.season]||S.season)}
+  if(seasonKey!=='default')document.body.classList.add('theme-'+seasonKey);
+  $('seasonInfo').textContent='目前：'+seasonName+'（'+today()+'）';
+  if(seasonKey!==seasonNow||!w!==darkNow){seasonNow=seasonKey;darkNow=!w;pTheme()}
+
+  var st=STY[S.si],sv=SVC[S.vi],sb=S.sub.map(function(i){return SUB[i]}).filter(Boolean).concat(S.sc?[S.sc]:[]).join('　｜　');
+  var FBn=S.fb>=FB.length-1,fo=FB[Math.min(S.fb,FB.length-1)],fbBig=FBn?(S.fbc||FB[0][0]):fo[0],fbSm=FBn?(S.fbs||'').replace(/\s+/g,'\n'):fo[1];
+  var ap=closed||(!n&&!FBn&&fo[2]===1);
+  var showMulti=(v===1&&n>0)||(v!==1&&n>1),showFull=!n||ap;
+
+  $('oTtl').classList.toggle('show',showMulti||showFull);
+  $('oExclusive').style.display=(showMulti||showFull)?'none':'block';
+
+  var html,note;
+  if(closed||!n){
+    $('oTtl').textContent=closed?'今日已額滿':(v===0?'今日單剪已額滿':'今日預約已滿');
+    html='<div class="big-time">'+fbBig+'</div>';note=fbSm;
+  }else if(v===1){
+    $('oTtl').textContent=mt(n);
+    html=rows(L.map(function(k){return hm(k)<=m?'現在可入座':k}),'dr');note='✦ 今日僅餘 '+n+' 個時段・一對一專屬服務'+(S.sc?'・'+S.sc:'')+' ✦';
+  }else{
+    $('oTtl').textContent=mt(n);
+    html='<div class="big-time">'+L[0]+'</div>'+(n>1?rows(L.slice(1),'oth'):'');
+    note=v===0?'✦ 現場依序入座・'+(n>1?'今日共 '+n+' 個時段':'僅此 1 個時段')+(S.sc?'・'+S.sc:'')+' ✦':(sb?'✦ '+sb+' ✦':n>1?'✦ 今日共 '+n+' 個專屬時段 ✦':'✦ '+period(L[0])+'限定專屬時段 · 僅此 1 席名額 ✦');
+  }
+  if(html!==boxHTML){boxHTML=html;$('oBox').innerHTML=html;retrig($('oBox'),'swap')}
+  $('oNote').textContent=note;$('oNote').style.display=note?'block':'none';
+  $('oTtl').classList.toggle('long',$('oTtl').textContent.length>12);
+  $('oSlot').classList.toggle('full',closed||!n);
+
+  // 倒數徽章：製造「現在就可以進來」的急迫感
+  if(n&&!closed){
+    var d=hm(L[0])-m,bd=$('oBadge');
+    bd.classList.toggle('soon',d>0);
+    $('oBadgeT').textContent=d<=0?'現在即可入座':(v===0?'最快 '+dur(d)+'後可入座':(v===1&&n>1?'最快 '+L[0]+' · ':'')+'還有 '+dur(d)+'開始');
+  }
+
+  $('oEn').textContent=(seasonKey==='ny'||seasonKey==='nd'||v===2)?(seasonKey==='nd'?'NATIONAL DAY':'LUNAR NEW YEAR'):"TODAY'S APPOINTMENT";
+  $('oTag').textContent=S.ti===TAG.length-1?(S.tc||TAG[0]):TAG[S.ti];
+  $('oName').textContent=st[0];$('oTitle').textContent=st[1];$('oTd').textContent=st[2];
+  var sn=v===0?['男士單剪','700 元 ・ 約 20 分鐘']:v===1?SVC[2]:sv;
+  $('oSvc').textContent=sn[0];$('oSd').textContent=v===0?sn[1]:(S.dc||sn[1]);
+
+  var wt=S.wi>=WLK.length-1?(S.wc||WLK[0]).replace(/\s+/g,'\n'):WLK[S.wi];
+  $('oWe').textContent=ap?'BY APPOINTMENT':'WELCOME WALK-IN';
+  $('oWz').textContent=ap?'預約制服務':'歡迎光臨';
+  $('oWalk').textContent=(ap?'敬請事先預約\n感謝您的體諒':wt).replace(/\n/g,'・');
+  $('oWalkWrap').classList.toggle('show',ap||S.wi<WLK.length-1);
+
+  var ik=v+'|'+seasonKey;if(ik!==introKey){introKey=ik;playIntro()}
+
+  // ===== 設定面板 =====
+  var stx=$('status');
+  stx.classList.toggle('warn',!closed&&!n);
+  stx.textContent=closed?'營業時間已結束，畫面顯示「今日已額滿」。':!n?'⚠ 還沒開放任何時段 → 畫面會顯示「今日預約已滿」。請到步驟 2 點選時段。':'✓ 畫面顯示 '+n+' 個時段，最近 '+L[0]+'・'+st[0]+'・'+sv[0];
+
+  ['v0','v1','v2'].forEach(function(id,i){$(id).className='mode'+(v===i?' on':'')});
+
+  var sg=$('sg'),arr=AR(v);sg.innerHTML='';
+  slots(v).forEach(function(k){
+    if(past(v,k,m))return;
+    var e=document.createElement('button'),c=cd(arr,k);
+    e.innerHTML=k+'<small>'+(c?'✓ 開放':'—')+'</small>';
+    e.className='sb'+(c?' on':'');
+    e.onclick=function(){cset(arr,k,cd(arr,k)?0:3);render()};
+    sg.appendChild(e);
+  });
+  if(!sg.children.length)sg.innerHTML='<div class="sync" style="grid-column:1/-1">今天已無可開放的時段</div>';
+  $('sgT').textContent=(v===1?'今天剩下的整點':v===2?'過年檔期開放時段':'今天開放的單剪時段')+(closed?'・營業時間已結束':'');
+  $('sPrev').disabled=!S.prev;
+
+  chips('cSty',STY,function(i){return i===S.si},function(i){S.si=i;render()});
+  chips('cSvc',SVC,function(i){return i===S.vi},function(i){S.vi=i;render()});
+  chips('cSub',SUB,function(i){return S.sub.indexOf(i)>=0},function(i){var j=S.sub.indexOf(i);if(j<0)S.sub.push(i);else S.sub.splice(j,1);render()});
+  [].forEach.call(document.querySelectorAll('#segTh button'),function(b){b.classList.toggle('on',b.dataset.th===S.th)});
+
+  var Hs=$('sHt'),Hh=v===1?HT1:v===2?HT2:HT0;
+  if(Hs.dataset.v!==''+v){Hs.innerHTML='';Hh.forEach(function(t,i){var o=document.createElement('option');o.value=i;o.textContent=t;Hs.appendChild(o)});Hs.dataset.v=v}
+  Hs.value=S.ht[v]||0;
+  $('hc').value=S.hc[v]||'';$('hc').classList.toggle('hide',(S.ht[v]||0)!==Hh.length-1);
+  $('nd').value=S.nd;$('nd').classList.toggle('hide',v!==2);
+  $('sTag').value=S.ti;$('tc').value=S.tc;$('tc').classList.toggle('hide',S.ti!==TAG.length-1);
+  $('sWlk').value=Math.min(S.wi,WLK.length-1);$('wc').value=S.wc;$('wc').classList.toggle('hide',S.wi<WLK.length-1);
+  $('sFb').value=Math.min(S.fb,FB.length-1);$('fbc').value=S.fbc;$('fbs').value=S.fbs;
+  $('fbc').classList.toggle('hide',S.fb<FB.length-1);$('fbs').classList.toggle('hide',S.fb<FB.length-1);
+  $('sc').value=S.sc;$('dc').value=S.dc;$('wf').value=S.wf;$('wt').value=S.wt;
+  $('sSeason').value=S.season||'auto';$('fxOn').checked=!!S.fx;$('autoP').checked=!!S.autoP;
+  $('autoSw').checked=S.asw!==false;
+  if(v!==S.v)stx.textContent+='（已過 18:45，自動切換為單剪模式）';
+  $('simt').textContent='預覽時間 '+f(+$('sim').value);$('sim').disabled=$('live').checked;
+  fit();save();
+}
+
+function fit(){
+  var c=$('card'),r=document.documentElement;
+  if(isP()){
+    var fr=$('frame'),top=innerWidth/100,rr=top,avail=c.offsetHeight;
+    fr.style.flex='none';fr.style.height='auto';
+    for(var i=0;i<6;i++){
+      r.style.fontSize=rr+'px';
+      var cst=getComputedStyle(c),
+          nd=fr.offsetHeight+parseFloat(cst.paddingTop)+parseFloat(cst.paddingBottom)+parseFloat(cst.borderTopWidth)+parseFloat(cst.borderBottomWidth),
+          nr=Math.min(top,rr*avail/nd);
+      if(Math.abs(nr-rr)<0.01)break;
+      rr=nr;
+    }
+    r.style.fontSize=(rr*0.995)+'px';
+    fr.style.flex='';fr.style.height='';
+  }else{
+    var w=Math.min($('stage').clientWidth,600);
+    r.style.fontSize=w/100+'px';c.style.width=w+'px';
+    // 平板橫向：讓整張預覽塞進一個畫面高
+    if(innerWidth>=900){var maxH=innerHeight-32,h=c.offsetHeight;if(h>maxH){w=w*maxH/h;r.style.fontSize=w/100+'px';c.style.width=w+'px'}}
+  }
+  pSize();
+}
+
+/* ========== 季節粒子（canvas，約 30fps） ========== */
+var P={cv:$('fx'),list:[],kind:'dust',col:['#c9a56b'],w:0,h:0,dpr:1,last:0};
+P.ctx=P.cv.getContext('2d');
+function rnd(a,b){return a+Math.random()*(b-a)}
+function pTheme(){
+  var cs=getComputedStyle(document.body),g=function(k){return cs.getPropertyValue(k).trim()};
+  P.kind={nd:'confetti',ny:'petal',qx:'heart',mid:'star',xmas:'snow'}[seasonNow]||'dust';
+  P.col=P.kind==='snow'?(darkNow?['#ffffff','#e8f0e8',g('--gold')]:[g('--c2'),g('--gold'),'#a9bcb0']):[g('--gold'),g('--c1'),g('--c2')];
+  P.list=[];pFill();
+}
+function pSize(){
+  var c=$('card'),d=Math.min(devicePixelRatio||1,1.5),w=c.clientWidth,h=c.clientHeight;
+  if(Math.round(w*d)===P.cv.width&&Math.round(h*d)===P.cv.height)return;
+  P.dpr=d;P.w=P.cv.width=Math.round(w*d);P.h=P.cv.height=Math.round(h*d);P.list=[];pFill();
+}
+function pNew(init){
+  var k=P.kind,d=P.dpr,fall=k==='confetti'||k==='petal'||k==='snow',p={
+    x:rnd(0,P.w),y:init?rnd(0,P.h):(fall?-20*d:P.h+20*d),ph:rnd(0,6.28),rot:rnd(0,6.28),vr:rnd(-0.03,0.03),
+    c:P.col[Math.random()*P.col.length|0]};
+  if(k==='dust'){p.r=rnd(1,3)*d;p.vx=rnd(-0.1,0.1)*d;p.vy=-rnd(0.15,0.45)*d;p.a=rnd(0.25,0.6)}
+  else if(k==='confetti'){p.r=rnd(3,6)*d;p.vx=rnd(-0.2,0.2)*d;p.vy=rnd(0.5,1.1)*d;p.a=rnd(0.35,0.65)}
+  else if(k==='petal'){p.r=rnd(4,8)*d;p.vx=rnd(0.15,0.5)*d;p.vy=rnd(0.4,0.9)*d;p.a=rnd(0.3,0.55)}
+  else if(k==='heart'){p.r=rnd(5,10)*d;p.vx=rnd(-0.1,0.1)*d;p.vy=-rnd(0.3,0.6)*d;p.a=rnd(0.25,0.5)}
+  else if(k==='star'){p.r=rnd(1.5,4)*d;p.vx=rnd(-0.04,0.04)*d;p.vy=-rnd(0.02,0.08)*d;p.a=rnd(0.3,0.8)}
+  else{p.r=rnd(1.5,3.8)*d;p.vx=0;p.vy=rnd(0.3,0.8)*d;p.a=rnd(0.4,0.85)}
+  return p;
+}
+function pFill(){var n=Math.min(55,Math.round(P.w*P.h/(P.dpr*P.dpr)/16000));while(P.list.length<n)P.list.push(pNew(true))}
+function pDraw(x,p,t){
+  x.globalAlpha=p.a*(P.kind==='star'||P.kind==='dust'?0.55+0.45*Math.sin(t/700+p.ph):1);
+  x.fillStyle=p.c;x.save();x.translate(p.x,p.y);x.rotate(p.rot);var r=p.r;x.beginPath();
+  if(P.kind==='confetti')x.rect(-r,-r/2,r*2,r);
+  else if(P.kind==='petal')x.ellipse(0,0,r,r*0.5,0,0,6.283);
+  else if(P.kind==='heart'){x.rotate(-p.rot);x.moveTo(0,r*0.35);x.bezierCurveTo(-r,-r*0.4,-r*0.5,-r,0,-r*0.45);x.bezierCurveTo(r*0.5,-r,r,-r*0.4,0,r*0.35)}
+  else if(P.kind==='star'){for(var i=0;i<8;i++){var a=i*Math.PI/4,l=i%2?r*0.35:r*1.6;x.lineTo(Math.cos(a)*l,Math.sin(a)*l)}x.closePath()}
+  else x.arc(0,0,r,0,6.283);
+  x.fill();x.restore();
+}
+function pLoop(t){
+  requestAnimationFrame(pLoop);
+  if(t-P.last<33)return;var k=Math.min(3,(t-P.last)/16.7);P.last=t;
+  var x=P.ctx;x.clearRect(0,0,P.w,P.h);
+  if(!S.fx||!P.w)return;
+  for(var i=0;i<P.list.length;i++){
+    var p=P.list[i];p.ph+=0.02*k;p.rot+=p.vr*k;
+    p.x+=(p.vx+(P.kind==='snow'||P.kind==='petal'?Math.sin(p.ph)*0.3*P.dpr:0))*k;p.y+=p.vy*k;
+    if(p.y<-30*P.dpr||p.y>P.h+30*P.dpr||p.x<-30*P.dpr||p.x>P.w+30*P.dpr){P.list[i]=pNew(false);continue}
+    pDraw(x,p,t);
+  }
+  x.globalAlpha=1;
+}
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches)requestAnimationFrame(pLoop);
+
+/* ========== 展示模式 ========== */
+var wl=null;
+function wake(){try{if(isP()&&navigator.wakeLock&&!wl)navigator.wakeLock.request('screen').then(function(l){wl=l;l.addEventListener('release',function(){wl=null})}).catch(function(){})}catch(e){}}
+function enterP(fs){
+  document.body.classList.add('present');scrollTo(0,0);playIntro();fit();setTimeout(fit,300);wake();
+  toast('展示中・長按右上角 1.5 秒回到設定');
+  if(fs){try{var e=document.documentElement;(e.requestFullscreen||e.webkitRequestFullscreen).call(e)}catch(x){}}
+}
+function exitP(){
+  document.body.classList.remove('present');$('frame').style.transform='';fit();
+  if(wl){try{wl.release()}catch(e){}wl=null}
+  try{if(document.fullscreenElement)document.exitFullscreen()}catch(x){}
+}
+$('bFull').onclick=function(){enterP(true)};
+document.addEventListener('fullscreenchange',function(){if(!document.fullscreenElement&&isP())exitP()});
+document.addEventListener('visibilitychange',function(){if(!document.hidden)wake()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&isP())exitP()});
+
+// 隱藏出口：右上角長按 1.5 秒（客人隨手點不會誤觸）
+var hot=$('hot'),hold=0;
+hot.addEventListener('pointerdown',function(e){e.preventDefault();e.stopPropagation();hot.classList.add('holding');clearTimeout(hold);hold=setTimeout(function(){hot.classList.remove('holding');exitP()},1500)});
+['pointerup','pointerleave','pointercancel'].forEach(function(t){hot.addEventListener(t,function(){clearTimeout(hold);hot.classList.remove('holding')})});
+hot.oncontextmenu=function(e){e.preventDefault()};
+
+// 客人觸碰畫面：金色漣漪回饋
+document.addEventListener('pointerdown',function(e){
+  if(!isP()||!S.fx||e.target===hot||hot.contains(e.target))return;
+  var r=document.createElement('span');r.className='ripple';r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';
+  document.body.appendChild(r);setTimeout(function(){r.remove()},950);
+});
+document.addEventListener('contextmenu',function(e){if(isP())e.preventDefault()});
+
+// 防烙印：展示中每 2 分鐘把內容微移幾個像素
+setInterval(function(){if(isP())$('frame').style.transform='translate('+Math.round(rnd(-6,6))+'px,'+Math.round(rnd(-6,6))+'px)'},120000);
+
+// 預覽卡片：點時段區直接跳到步驟 2
+$('card').addEventListener('click',function(){if(isP())return;var s=$('step2');s.scrollIntoView({behavior:'smooth',block:'center'});retrig(s,'flash')});
+
+/* ========== 設定事件 ========== */
+fill('sTag',TAG);fill('sWlk',WLK);fill('sFb',FB.map(function(x){return x[0]}));
+try{var q=JSON.parse(localStorage.getItem(KEY)||'null');if(q){S=Object.assign(S,q);if(S.v>2)S.v=0;delete S.e;S.ht=S.ht.slice(0,3);S.hc=S.hc.slice(0,3)}}catch(e){}
+$('v0').onclick=function(){S.v=0;render()};$('v1').onclick=function(){S.v=1;render()};$('v2').onclick=function(){S.v=2;render()};
+$('sSeason').onchange=function(){S.season=this.value;render()};
+function openFrom(test){var v=EV(),m=nowM();SA(v,slots(v).filter(function(k){return!past(v,k,m)&&test(k)}).map(function(k){return k+'|3'}));render()}
+$('sAll').onclick=function(){openFrom(function(){return true})};
+$('sPm').onclick=function(){openFrom(function(k){return hm(k)>=780})};
+$('sNone').onclick=function(){SA(EV(),[]);render()};
+$('sPrev').onclick=function(){
+  var v=EV(),m=nowM(),p=S.prev||{},src=(v===2?p.c:v===1?p.b:p.a)||[];
+  var r=src.filter(function(x){return!past(v,x.slice(0,5),m)});
+  if(!r.length){toast('上次在這個畫面沒有還能用的時段');return}
+  SA(v,r.slice());render();toast('已套用上次的 '+r.length+' 個時段');
+};
+[].forEach.call(document.querySelectorAll('#segTh button'),function(b){b.onclick=function(){S.th=b.dataset.th;render()}});
+$('fxOn').onchange=function(){S.fx=this.checked;render();if(S.fx)playIntro()};
+$('autoP').onchange=function(){S.autoP=this.checked;render()};
+$('autoSw').onchange=function(){S.asw=this.checked;render()};
+$('sTag').onchange=function(){S.ti=+this.value;render()};$('sWlk').onchange=function(){S.wi=+this.value;render()};
+$('wf').onchange=function(){S.wf=this.value;render()};$('wt').onchange=function(){S.wt=this.value;render()};
+$('sHt').onchange=function(){S.ht[EV()]=+this.value;render()};
+$('hc').oninput=function(){S.hc[EV()]=this.value;render()};
+$('sFb').onchange=function(){S.fb=+this.value;render()};
+['tc','wc','sc','dc','fbc','fbs','nd'].forEach(function(k){$(k).oninput=function(){S[k]=this.value;render()}});
+$('live').onchange=$('sim').oninput=render;
+addEventListener('resize',fit);
+
+// iPad／手機優先用分享選單（可直接「儲存影像」到相簿），不支援時改成一般下載
+function saveBlob(b,name){
+  var file=new File([b],name,{type:'image/png'});
+  var plain=function(){var u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000);toast('圖片已下載')};
+  var share=function(){if(navigator.canShare&&navigator.canShare({files:[file]}))return navigator.share({files:[file]}).catch(function(e){if(!e||e.name!=='AbortError')plain()});plain()};
+  // 已發佈的頁面要用平台的「下載」功能才存得到；不可用時才退回分享選單／一般下載
+  if(window.claude&&window.claude.use){
+    window.claude.use('downloads').then(function(d){
+      if(!d){share();return}
+      return d.save({filename:name,data:b}).then(function(){toast('圖片已儲存')}).catch(function(e){if(!e||e.code!=='declined')share()});
+    }).catch(function(){share()});
+  }else share();
+}
+async function dl(W,H,name){
+  try{
+    toast('圖片產生中…');
+    document.body.classList.add('capturing');
+    var c=$('card'),cv=await html2canvas(c,{scale:960/c.offsetWidth,backgroundColor:null,useCORS:true,ignoreElements:function(el){return el.id==='fx'}});
+    document.body.classList.remove('capturing');
+    var o=document.createElement('canvas');o.width=W;o.height=H;var x=o.getContext('2d');
+    x.fillStyle=getComputedStyle(document.body).backgroundColor;x.fillRect(0,0,W,H);
+    var sw=W*.92,sh=cv.height*sw/cv.width;if(sh>H*.94){sh=H*.94;sw=cv.width*sh/cv.height}
+    x.drawImage(cv,(W-sw)/2,(H-sh)/2,sw,sh);
+    var b=await new Promise(function(r){o.toBlob(r,'image/png')});saveBlob(b,name);
+  }catch(e){document.body.classList.remove('capturing');toast('圖片產生失敗，請再試一次')}}
+$('dStory').onclick=function(){dl(1080,1920,'wea-story.png')};$('dPost').onclick=function(){dl(1080,1350,'wea-post.png')};
+rn();
+if(S.autoP)enterP(false);
+setInterval(render,20000);
+</script>
+</body>
+</html>
