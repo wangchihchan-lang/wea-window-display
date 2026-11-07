@@ -947,14 +947,28 @@ function getSettingsHash() {
   return JSON.stringify({v:S.v, si:S.si, vi:S.vi, th:S.th, fx:S.fx, a:S.a});
 }
 
+var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxwL1a-96AVIaD1GY9VYyJiyxjGcqobNrfp8vclPDRbSyuzSK8S_cQFKhhktFoqF2nM/exec";
+
 function syncToSheet() {
-  if (!SHEET_CSV) {
-    toast('請先設定 Google 試算表連結');
-    return;
-  }
-  // 這裡簡化：提示用戶到試算表更新，或未來可接 Apps Script
-  toast('已記錄設定，請在試算表更新 slots 等欄位後，展示端會自動讀取');
-  lastSyncHash = getSettingsHash();
+  var payload = {
+    mode: S.v,
+    stylist: S.si,
+    service: S.vi,
+    theme: S.th || 'auto',
+    fx: S.fx ? 'true' : 'false',
+    slots: (S.a || []).map(function(x){ return x.split('|')[0]; }).join(',')
+  };
+  toast('同步中...');
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(payload)
+  }).then(function(){
+    toast('已同步，展示端將自動更新');
+  }).catch(function(){
+    toast('同步失敗，請稍後再試');
+  });
 }
 
 function pollFromSheet() {
