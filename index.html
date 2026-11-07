@@ -913,10 +913,8 @@ details.adv h4:first-child { margin-top: 0; }
 
   <div class="sync" id="syncSt" style="margin:10px 0 0">同步：連線中…</div>
   <div class="go">
-    <button class="gobtn" id="bSync" style="background:#c9a56b;color:#16130e;margin-bottom:10px">☁ 同步到展示端</button>
+    <button class="gobtn" id="bShare" style="background:#c9a56b;color:#16130e;margin-bottom:10px">📋 產生連結</button>
     <button class="gobtn" id="bFull">▶ 開始櫥窗展示</button>
-    <small>展示中長按畫面右上角 1.5 秒即可回到設定</small>
-  </div>
     <small>展示中長按畫面右上角 1.5 秒即可回到設定</small>
   </div>
  </aside>
@@ -938,67 +936,43 @@ function mt(n){var e=EV(),H=e===1?HT1:e===2?HT2:HT0,i=S.ht[e]||0,t=i===H.length-
 var WLK=['路過貴賓請洽櫃檯\n依到場順序入座','路過貴賓歡迎洽詢\n依到場順序入座','自訂'];
 var D={v:0,si:0,vi:0,sub:[0,1,2],ti:0,wi:0,th:'auto',wf:'18:00',wt:'06:00',day:'',a:[],b:[],c:[],prev:null,ht:[0,0,0],hc:['','',''],nd:'',season:'auto',sc:'',dc:'',tc:'',wc:'',fb:0,fbc:'',fbs:'',fx:true,autoP:false,asw:true};
 var S=JSON.parse(JSON.stringify(D)),KEY='wea-v7';
-
-// ===== 遠端同步設定 =====
-var SHEET_CSV = 'https://docs.google.com/spreadsheets/d/1UpWLL1chrKvEHYVHjVraoHN349aOGKJ1S9y-jveGyFM/export?format=csv'; // 請填入你的 Google 試算表發佈 CSV 連結
-var lastSyncHash = '';
-
-function getSettingsHash() {
-  return JSON.stringify({v:S.v, si:S.si, vi:S.vi, th:S.th, fx:S.fx, a:S.a});
+// ===== 網址參數控制 =====
+function applyUrlParams() {
+  var params = new URLSearchParams(location.search);
+  var changed = false;
+  if (params.has('mode')) { S.v = parseInt(params.get('mode')) || 0; changed = true; }
+  if (params.has('stylist')) { S.si = parseInt(params.get('stylist')) || 0; changed = true; }
+  if (params.has('service')) { S.vi = parseInt(params.get('service')) || 0; changed = true; }
+  if (params.has('theme')) { S.th = params.get('theme'); changed = true; }
+  if (params.has('slots')) {
+    var arr = params.get('slots').split(',').filter(Boolean).map(function(t){ return t.trim()+'|3'; });
+    S.a = arr;
+    changed = true;
+  }
+  if (changed) render();
 }
 
-var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxjVvbTphPRh4x7kVLJK4lxy2LAB6lnMlIFLDCfdLLA7jWrWJ7zCnEcjdA9G_sWfxjc/exec";
-
-function syncToSheet() {
-  var payload = {
-    mode: S.v,
-    stylist: S.si,
-    service: S.vi,
-    theme: S.th || 'auto',
-    fx: S.fx ? 'true' : 'false',
-    slots: (S.a || []).map(function(x){ return x.split('|')[0]; }).join(',')
-  };
-  toast('同步中...');
-  fetch(SCRIPT_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(payload)
-  }).then(function(){
-    toast('已同步，展示端將自動更新');
-  }).catch(function(){
-    toast('同步失敗，請稍後再試');
-  });
+function generateShareUrl() {
+  var slots = (S.a || []).map(function(x){ return x.split('|')[0]; }).join(',');
+  var url = location.origin + location.pathname + 
+    '?mode=' + S.v + 
+    '&stylist=' + S.si + 
+    '&service=' + S.vi + 
+    '&theme=' + (S.th || 'auto') +
+    '&slots=' + encodeURIComponent(slots);
+  return url;
 }
 
-function pollFromSheet() {
-  if (!SHEET_CSV) return;
-  fetch(SHEET_CSV + (SHEET_CSV.includes('?') ? '&' : '?') + 't=' + Date.now())
-    .then(r => r.text())
-    .then(csv => {
-      var lines = csv.trim().split('\n');
-      var map = {};
-      lines.slice(1).forEach(line => {
-        var p = line.split(',');
-        if (p.length >= 2) map[p[0].trim()] = p[1].trim();
-      });
-      var changed = false;
-      if (map.mode !== undefined) { var v = parseInt(map.mode)||0; if (v !== S.v) { S.v = v; changed = true; } }
-      if (map.stylist !== undefined) { var si = parseInt(map.stylist)||0; if (si !== S.si) { S.si = si; changed = true; } }
-      if (map.service !== undefined) { var vi = parseInt(map.service)||0; if (vi !== S.vi) { S.vi = vi; changed = true; } }
-      if (map.theme && map.theme !== S.th) { S.th = map.theme; changed = true; }
-      if (map.fx !== undefined) { var fx = map.fx === 'true'; if (fx !== !!S.fx) { S.fx = fx; changed = true; } }
-      if (map.slots) {
-        var arr = map.slots.split(',').map(t => t.trim()+'|3').filter(Boolean);
-        if (JSON.stringify(arr) !== JSON.stringify(S.a)) { S.a = arr; changed = true; }
-      }
-      if (changed) render();
-    })
-    .catch(() => {});
+function copyShareUrl() {
+  var url = generateShareUrl();
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(function(){
+      toast('連結已複製，請在展示端打開');
+    });
+  } else {
+    prompt('複製這個連結到展示端打開：', url);
+  }
 }
-
-setInterval(pollFromSheet, 10000);
-pollFromSheet();
 
 var boxHTML='',introKey='',seasonNow='',darkNow=false;
 
@@ -1274,8 +1248,9 @@ function exitP(){
   try{if(document.fullscreenElement)document.exitFullscreen()}catch(x){}
 }
 
-$('bSync').onclick = syncToSheet;
+$('bShare').onclick = copyShareUrl;
 $('bFull').onclick=function(){enterP(true)};
+applyUrlParams();
 
 document.addEventListener('fullscreenchange',function(){if(!document.fullscreenElement&&isP())exitP()});
 document.addEventListener('visibilitychange',function(){if(!document.hidden)wake()});
